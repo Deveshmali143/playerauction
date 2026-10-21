@@ -9,16 +9,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 public class TeamActivity extends AppCompatActivity {
-
     EditText etTeamName;
     EditText etPurse;
     Button btAddTeam;
     TextView txtTeams;
-    ArrayList<team> teams = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,36 +27,46 @@ public class TeamActivity extends AppCompatActivity {
         btAddTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = etTeamName.getText().toString().trim();
-                String purseText = etPurse.getText().toString().trim();
-
-                if (name.isEmpty()) {
-                    Toast.makeText(TeamActivity.this, "Enter team name", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (purseText.isEmpty()) {
-                    Toast.makeText(TeamActivity.this, "Enter starting purse", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                double purse = Double.parseDouble(purseText);
-                if (purse <= 0) {
-                    Toast.makeText(TeamActivity.this, "Purse must be greater than 0", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                team team = new team(name,purse);
-                teams.add(team);
-                displayTeams();
-                etTeamName.setText("");
-                etPurse.setText("");
-                Toast.makeText(TeamActivity.this, "Team added successfully", Toast.LENGTH_SHORT).show();
+                addTeam();
             }
         });
+        displayTeams();
+    }
+
+    private void addTeam() {
+        String name = etTeamName.getText().toString().trim();
+        String purseText = etPurse.getText().toString().trim();
+
+        if (name.isEmpty()) {
+            Toast.makeText(this,"Enter team name",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (purseText.isEmpty()) {
+            Toast.makeText(this,"Enter starting purse",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            double purse = Double.parseDouble(purseText);
+            if (purse <= 0) {
+                Toast.makeText(this,"Purse must be greater than 0",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Team team = new Team(name, purse);
+            AppData.teams.add(team);
+            displayTeams();
+
+            etTeamName.setText("");
+            etPurse.setText("");
+
+            Toast.makeText(this,"Team added successfully",Toast.LENGTH_SHORT).show();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this,"Enter a valid purse amount",Toast.LENGTH_SHORT).show();
+        }
     }
     private void displayTeams() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < teams.size(); i++) {
-            team team = teams.get(i);
+        for (int i = 0; i < AppData.teams.size(); i++) {
+            Team team = AppData.teams.get(i);
             result.append(i + 1)
                     .append(". ")
                     .append(team.name)
@@ -69,6 +74,10 @@ public class TeamActivity extends AppCompatActivity {
                     .append(team.purse)
                     .append("\n\n");
         }
-        txtTeams.setText(result.toString());
+        if (result.length() == 0) {
+            txtTeams.setText("No teams added yet.");
+        } else {
+            txtTeams.setText(result.toString());
+        }
     }
 }

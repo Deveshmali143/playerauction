@@ -1,3 +1,4 @@
+
 package com.example.playerauction;
 
 import android.os.Bundle;
@@ -9,15 +10,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 public class PlayerActivity extends AppCompatActivity {
 
-    EditText etPlayerName;
-    EditText etBasePrice;
+    EditText etPlayerName, etBasePrice;
     Button btAddPlayer;
     TextView txtPlayers;
-    ArrayList<Player> players = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,34 +29,42 @@ public class PlayerActivity extends AppCompatActivity {
         btAddPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = etPlayerName.getText().toString().trim();
-                String priceText = etBasePrice.getText().toString().trim();
-                if (name.isEmpty()) {
-                    Toast.makeText(PlayerActivity.this,"Enter player name",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (priceText.isEmpty()) {
-                    Toast.makeText(PlayerActivity.this,"Enter base price",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                double basePrice = Double.parseDouble(priceText);
-                if (basePrice <= 0) {
-                    Toast.makeText(PlayerActivity.this, "Base price must be greater than 0",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Player player = new Player(name, basePrice);
-                players.add(player);
-                displayPlayers();
-                etPlayerName.setText("");
-                etBasePrice.setText("");
-                Toast.makeText(PlayerActivity.this,"Player added successfully", Toast.LENGTH_SHORT).show();
+                addPlayer();
             }
         });
+        displayPlayers();
+    }
+    private void addPlayer() {
+        String name = etPlayerName.getText().toString().trim();
+        String priceText = etBasePrice.getText().toString().trim();
+
+        if (name.isEmpty() || priceText.isEmpty()) {
+            Toast.makeText(this,"Enter player name and base price",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            double basePrice = Double.parseDouble(priceText);
+            if (basePrice <= 0) {
+                Toast.makeText(this,"Base price must be greater than 0",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Player player = new Player(name, basePrice);
+            AppData.players.add(player);
+            displayPlayers();
+            etPlayerName.setText("");
+            etBasePrice.setText("");
+
+            Toast.makeText(this,"Player added successfully",Toast.LENGTH_SHORT).show();
+
+        } catch (NumberFormatException e) {
+            Toast.makeText(this,"Enter a valid base price",Toast.LENGTH_SHORT).show();
+        }
     }
     private void displayPlayers() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+        for (int i = 0; i < AppData.players.size(); i++) {
+            Player player = AppData.players.get(i);
             result.append(i + 1)
                     .append(". ")
                     .append(player.name)
@@ -66,6 +72,10 @@ public class PlayerActivity extends AppCompatActivity {
                     .append(player.basePrice)
                     .append("\n\n");
         }
-        txtPlayers.setText(result.toString());
+        if (result.length() == 0) {
+            txtPlayers.setText("No players added yet.");
+        } else {
+            txtPlayers.setText(result.toString());
+        }
     }
 }

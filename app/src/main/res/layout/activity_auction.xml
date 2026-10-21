@@ -3,21 +3,25 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/auction"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:background="#99000000">
 
         <TextView
             android:id="@+id/auctionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Player Auction"
+            android:textColor="#FFFFFF"
             android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/auctionPlayerName"
@@ -25,8 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:text="Player Name"
+            android:textColor="#FFFFFF"
             android:textSize="22sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/auctionBasePrice"
@@ -34,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Base Price: ₹0"
-            android:textSize="18sp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/auctionCurrentBid"
@@ -42,8 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Current Bid: ₹0"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/auctionHighestTeam"
@@ -51,7 +58,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Highest Bid Team: None"
-            android:textSize="18sp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Tap a team to place a bid:"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/auctionTeamButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical" />
 
         <TextView
             android:id="@+id/auctionTimer"
@@ -60,24 +84,19 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="00:00"
-            android:textSize="32sp"
-            android:textStyle="bold"/>
-
-        <Button
-            android:id="@+id/auctionBidButton"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:text="Place Bid"
-            android:textAllCaps="false"/>
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/auctionSoldButton"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:text="SOLD"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2E7D32" />
 
         <Button
             android:id="@+id/auctionUnsoldButton"
@@ -85,14 +104,17 @@
             android:layout_height="55dp"
             android:layout_marginTop="10dp"
             android:text="UNSOLD"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#C62828" />
 
         <TextView
             android:id="@+id/auctionTeamList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:textSize="17sp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
 
     </LinearLayout>
 
